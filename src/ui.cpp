@@ -915,12 +915,19 @@ void UpdateDialog::StateDownloading()
 void UpdateDialog::DownloadProgress(size_t downloaded, size_t total)
 {
     wxString label;
+    
+    // Feed smaller scales into the UI because it can't handle numbers beyond 4GB otherwise
+    size_t downloadedKb = downloaded / 1000;
+    size_t totalKb = total / 1000;
 
     if ( total )
     {
-        if ( m_progress->GetRange() != total )
-            m_progress->SetRange(total);
-        m_progress->SetValue(downloaded);
+        if (m_progress->GetRange() != totalKb)
+        {
+            m_progress->SetRange(totalKb);
+        }
+
+        m_progress->SetValue(downloadedKb);
         label = wxString::Format
                 (
                     // TRANSLATORS: This is the progress of a download, e.g. "3 MB of 12 MB".
