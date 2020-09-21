@@ -916,11 +916,11 @@ void UpdateDialog::DownloadProgress(size_t downloaded, size_t total)
 {
     wxString label;
     
-    // Feed smaller scales into the UI because it can't handle numbers beyond 4GB otherwise
+    // Feed smaller scales into the UI because it can't handle numbers beyond 2GB otherwise
     size_t downloadedKb = downloaded / 1000;
     size_t totalKb = total / 1000;
 
-    if ( total )
+    if (totalKb != 0)
     {
         if (m_progress->GetRange() != totalKb)
         {
@@ -942,8 +942,10 @@ void UpdateDialog::DownloadProgress(size_t downloaded, size_t total)
         label = wxFileName::GetHumanReadableSize(downloaded, "", 1, wxSIZE_CONV_SI);
     }
 
-    if ( label != m_progressLabel->GetLabel() )
-      m_progressLabel->SetLabel(label);
+    if (label != m_progressLabel->GetLabel())
+    {
+        m_progressLabel->SetLabel(label);
+    }
 
     Refresh();
     Update();

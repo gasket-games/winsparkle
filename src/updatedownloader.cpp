@@ -180,6 +180,13 @@ void UpdateDownloader::Run()
       DownloadFile(m_appcast.DownloadURL, &sink, this);
       sink.Close();
 
+      if (!m_appcast.AdditionalDownloadURL.empty())
+      {
+          UpdateDownloadSink additionalSink(*this, tmpdir);
+          DownloadFile(m_appcast.AdditionalDownloadURL, &additionalSink, this);
+          additionalSink.Close();
+      }
+
       if (Settings::HasDSAPubKeyPem())
       {
           SignatureVerifier::VerifyDSASHA1SignatureValid(sink.GetFilePath(), m_appcast.DsaSignature);

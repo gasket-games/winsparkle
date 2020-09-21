@@ -57,6 +57,7 @@ namespace
 #define NODE_ENCLOSURE  "enclosure"
 #define NODE_MIN_OS_VERSION NS_SPARKLE_NAME("minimumSystemVersion")
 #define ATTR_URL        "url"
+#define ATTR_ADDITIONALURL      "additional_url"
 #define ATTR_VERSION    NS_SPARKLE_NAME("version")
 #define ATTR_SHORTVERSION NS_SPARKLE_NAME("shortVersionString")
 #define ATTR_DSASIGNATURE NS_SPARKLE_NAME("dsaSignature")
@@ -166,18 +167,34 @@ void XMLCALL OnStartElement(void *data, const char *name, const char **attrs)
                 const char *name = attrs[i];
                 const char *value = attrs[i+1];
 
-                if ( strcmp(name, ATTR_URL) == 0 )
-                    ctxt.items[size-1].DownloadURL = value;
-                else if ( strcmp(name, ATTR_VERSION) == 0 )
-                    ctxt.items[size-1].Version = value;
-                else if ( strcmp(name, ATTR_SHORTVERSION) == 0 )
-                    ctxt.items[size-1].ShortVersionString = value;
-                else if ( strcmp(name, ATTR_DSASIGNATURE) == 0 )
-                    ctxt.items[size-1].DsaSignature = value;
-                else if ( strcmp(name, ATTR_OS) == 0 )
-                    ctxt.items[size-1].Os = value;
-                else if ( strcmp(name, ATTR_ARGUMENTS) == 0 )
-                    ctxt.items[size-1].InstallerArguments = value;
+                if (strcmp(name, ATTR_URL) == 0)
+                {
+                    ctxt.items[size - 1].DownloadURL = value;
+                }
+                else if (strcmp(name, ATTR_ADDITIONALURL) == 0)
+                {
+                    ctxt.items[size - 1].AdditionalDownloadURL = value;
+                }
+                else if (strcmp(name, ATTR_VERSION) == 0)
+                {
+                    ctxt.items[size - 1].Version = value;
+                }
+                else if (strcmp(name, ATTR_SHORTVERSION) == 0)
+                {
+                    ctxt.items[size - 1].ShortVersionString = value;
+                }
+                else if (strcmp(name, ATTR_DSASIGNATURE) == 0)
+                {
+                    ctxt.items[size - 1].DsaSignature = value;
+                }
+                else if (strcmp(name, ATTR_OS) == 0)
+                {
+                    ctxt.items[size - 1].Os = value;
+                }
+                else if (strcmp(name, ATTR_ARGUMENTS) == 0)
+                {
+                    ctxt.items[size - 1].InstallerArguments = value;
+                }
             }
         }
     }
